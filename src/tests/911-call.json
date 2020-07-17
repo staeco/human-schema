@@ -1,0 +1,110 @@
+{
+  "id": "911-call",
+  "name": "911 Call",
+  "notes": "A 911 call.",
+  "schema": {
+    "receivedAt": {
+      "name": "Received",
+      "type": "date",
+      "validation": {
+        "required": true
+      }
+    },
+    "dispatchedAt": {
+      "name": "Dispatched",
+      "type": "date"
+    },
+    "arrivedAt": {
+      "name": "Arrived",
+      "type": "date"
+    },
+    "units": {
+      "name": "Units",
+      "type": "array",
+      "validation": {
+        "notEmpty": true,
+        "maxItems": 2048
+      },
+      "items": {
+        "name": "Unit ID",
+        "type": "text",
+        "validation": {
+          "required": true,
+          "notEmpty": true,
+          "maxLength": 2048
+        }
+      }
+    },
+    "officers": {
+      "name": "Officers",
+      "type": "array",
+      "validation": {
+        "notEmpty": true,
+        "maxItems": 2048
+      },
+      "items": {
+        "name": "Officer ID",
+        "type": "text",
+        "validation": {
+          "required": true,
+          "notEmpty": true,
+          "maxLength": 2048
+        }
+      }
+    },
+    "code": {
+      "name": "Code",
+      "type": "text",
+      "validation": {
+        "notEmpty": true,
+        "maxLength": 2048
+      }
+    },
+    "type": {
+      "name": "Type",
+      "type": "text",
+      "validation": {
+        "notEmpty": true,
+        "maxLength": 2048
+      }
+    },
+    "notes": {
+      "name": "Notes",
+      "type": "text",
+      "validation": {
+        "notEmpty": true
+      }
+    },
+    "images": {
+      "name": "Images",
+      "type": "array",
+      "validation": {
+        "notEmpty": true,
+        "maxItems": 2048
+      },
+      "items": {
+        "name": "Image",
+        "type": "text",
+        "validation": {
+          "required": true,
+          "image": true
+        }
+      }
+    },
+    "address": {
+      "name": "Address",
+      "type": "text",
+      "validation": {
+        "notEmpty": true,
+        "maxLength": 2048
+      }
+    },
+    "location": {
+      "name": "Location",
+      "type": "point",
+      "validation": {
+        "required": true
+      }
+    }
+  }
+}
