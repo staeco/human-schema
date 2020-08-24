@@ -312,6 +312,7 @@ describe('tables#dataType#validateItem', () => {
     ])
   })
   it('validateItem() should return errors on invalid geojson geometry', async () => {
+    if (process.env.NO_DB) return // on CI and testing in non-DB mode, this will only fail with advanced db validation so skip
     const spec = {
       ...base,
       schema: {

@@ -1,6 +1,10 @@
 import { Sequelize } from 'sequelize'
 
-export const client = new Sequelize('human-schema', 'postgres', 'postgres', {
-	host: 'localhost',
-	dialect: 'postgres'
-})
+const client = process.env.NO_DB
+	? null
+	: new Sequelize('human-schema', 'postgres', 'postgres', {
+		host: 'localhost',
+		dialect: 'postgres'
+	})
+
+export { client }

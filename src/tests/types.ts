@@ -191,7 +191,4 @@ describe('tables#dataType#types', () => {
     })).be.true
   })
 })
-after(async () => {
-	await client.close()
-})
 

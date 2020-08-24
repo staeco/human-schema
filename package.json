@@ -21,7 +21,8 @@
 		"clean": "rm -rf dist",
 		"test-make-user": "createuser postgres -lsd",
 		"test-db": "dropdb human-schema -U postgres || true && createdb human-schema -U postgres && psql human-schema -c 'CREATE EXTENSION IF NOT EXISTS postgis;' -U postgres",
-		"test": "npm run-script test-db && mocha -r ts-node/register src/tests/*.ts"
+		"test": "npm run-script test-db && mocha -r ts-node/register src/tests/*.ts --exit",
+		"test-no-db": "NO_DB=true mocha -r ts-node/register src/tests/*.ts --exit"
 	},
 	"devDependencies": {
 		"@types/geojson": "^7946.0.7",
