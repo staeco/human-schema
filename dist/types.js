@@ -244,11 +244,11 @@ exports.number = {
         duration: {
             name: 'Duration',
             options: {
-                nanosecond: { name: 'Microsecond (µs)' },
-                millisecond: { name: 'Millisecond (ms)' },
-                second: { name: 'Second (s)' },
-                minute: { name: 'Minute (min)' },
-                hour: { name: 'Hour (h)' }
+                nanosecond: { name: 'Microseconds (µs)' },
+                millisecond: { name: 'Milliseconds (ms)' },
+                second: { name: 'Seconds (s)' },
+                minute: { name: 'Minutes (min)' },
+                hour: { name: 'Hours (h)' }
             }
         },
         datePart: {
@@ -256,9 +256,9 @@ exports.number = {
             options: {
                 hourOfDay: { name: 'Hour of Day (0-23)' },
                 dayOfWeek: { name: 'Day of Week (1-7)' },
-                dayOfMonth: { name: 'Day of Month (01-31)' },
+                dayOfMonth: { name: 'Day of Month (1-31)' },
                 dayOfYear: { name: 'Day of Year (0-366)' },
-                monthOfYear: { name: 'Month of Year (01-12)' }
+                monthOfYear: { name: 'Month of Year (1-12)' }
             }
         },
         speed: {
