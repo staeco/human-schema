@@ -20,7 +20,12 @@ const isValidGeometry_1 = __importDefault(require("./isValidGeometry"));
 const moment_timezone_1 = __importDefault(require("moment-timezone"));
 const is_unique_1 = __importDefault(require("is-unique"));
 const is_plain_obj_1 = __importDefault(require("is-plain-obj"));
-const isValidDate = (v) => moment_timezone_1.default(v, moment_timezone_1.default.ISO_8601).isValid();
+const isValidDate = (v) => {
+    if (v instanceof Date)
+        return !isNaN(v.getTime()); // already a date
+    const parsed = moment_timezone_1.default(v, moment_timezone_1.default.ISO_8601);
+    return parsed.isValid() && parsed.toISOString() === v;
+};
 const isNumber = (v) => typeof v === 'number' && Number.isFinite(v);
 const getBasicGeoJSONIssues = (v, type) => {
     if (!is_plain_obj_1.default(v))

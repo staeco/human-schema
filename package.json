@@ -1,6 +1,6 @@
 {
 	"name": "human-schema",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "User friendly declarative schemas",
 	"main": "./dist/index.js",
 	"keywords": [],
@@ -36,7 +36,7 @@
 	},
 	"dependencies": {
 		"@mapbox/geojsonhint": "^3.0.0",
-		"is-plain-obj": "^2.1.0",
+		"is-plain-obj": "^3.0.0",
 		"is-unique": "^0.0.1",
 		"moment-timezone": "^0.5.31",
 		"validator": "^13.1.1"

@@ -7,7 +7,12 @@ import isUnique from 'is-unique'
 import isObject from 'is-plain-obj'
 import { GeoObject, Type } from './typings'
 
-const isValidDate = (v: Date) => moment(v, moment.ISO_8601).isValid()
+const isValidDate = (v: Date|string) => {
+  if (v instanceof Date) return !isNaN(v.getTime()) // already a date
+  const parsed = moment(v, moment.ISO_8601)
+  return parsed.isValid() && parsed.toISOString() === v
+}
+
 const isNumber = (v: number|any) =>
   typeof v === 'number' && Number.isFinite(v)
 
