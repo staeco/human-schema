@@ -20,6 +20,7 @@ const getBasicGeoJSONIssues = (v: GeoObject, type: string) => {
   if (!isObject(v)) return 'Not a valid object'
   if (v.type !== type) return `Not a valid type value (Expected ${type} not ${v.type})`
 	if (v.geometry && v.geometry.type !== type) return `Not a valid geometry.type value (Expected ${type} not ${v.type})`
+  return true
 }
 /*
 Validations:
@@ -323,7 +324,7 @@ export const point: Type = {
   test: (v: any) => getBasicGeoJSONIssues(v, 'Point'),
   testAsync: async (v: any, conn: Object) => { // TODO: sequelize conn type
     const basicIssues = getBasicGeoJSONIssues(v, 'Point')
-    if (basicIssues) return basicIssues
+    if (basicIssues !== true) return basicIssues
     const geojson = await isValidGeoJSON(v)
     if (geojson !== true) return geojson // return the reason
     if (conn) return isValidGeometry(v, conn)
@@ -363,7 +364,7 @@ export const line: Type = {
   test: (v: any) => getBasicGeoJSONIssues(v, 'LineString'),
   testAsync: async (v: any, conn: Object) => {
     const basicIssues = getBasicGeoJSONIssues(v, 'LineString')
-    if (basicIssues) return basicIssues
+    if (basicIssues !== true) return basicIssues
     const geojson = await isValidGeoJSON(v)
     if (geojson !== true) return geojson // return the reason
     if (conn) return isValidGeometry(v, conn)
@@ -383,7 +384,7 @@ export const multiline: Type = {
   test: (v: any) => getBasicGeoJSONIssues(v, 'MultiLineString'),
   testAsync: async (v: any, conn: Object) => {
     const basicIssues = getBasicGeoJSONIssues(v, 'MultiLineString')
-    if (basicIssues) return basicIssues
+    if (basicIssues !== true) return basicIssues
     const geojson = await isValidGeoJSON(v)
     if (geojson !== true) return geojson // return the reason
     if (conn) return isValidGeometry(v, conn)
@@ -403,7 +404,7 @@ export const polygon: Type = {
   test: (v: any) => getBasicGeoJSONIssues(v, 'Polygon'),
   testAsync: async (v: any, conn: Object) => {
     const basicIssues = getBasicGeoJSONIssues(v, 'Polygon')
-    if (basicIssues) return basicIssues
+    if (basicIssues !== true) return basicIssues
     const geojson = await isValidGeoJSON(v)
     if (geojson !== true) return geojson // return the reason
     if (conn) return isValidGeometry(v, conn)
@@ -421,7 +422,7 @@ export const multipolygon: Type = {
   test: (v: any) => getBasicGeoJSONIssues(v, 'MultiPolygon'),
   testAsync: async (v: any, conn: Object) => {
     const basicIssues = getBasicGeoJSONIssues(v, 'MultiPolygon')
-    if (basicIssues) return basicIssues
+    if (basicIssues !== true) return basicIssues
     const geojson = await isValidGeoJSON(v)
     if (geojson !== true) return geojson // return the reason
     if (conn) return isValidGeometry(v, conn)
