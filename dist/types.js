@@ -37,7 +37,7 @@ const getBasicGeoJSONIssues = (v, type) => {
 };
 /*
 Validations:
-  - name (displayed on the )
+  - name (displayed in the UI)
   - validateValue (function that receives the validation value and returns true/false if it is valid)
   - valueType (should be a valid type in the data type system, the FE displays different inputs based on this)
   - test (receives the validation value, and the datum value and returns true/false if the datum value is valid)
@@ -334,7 +334,8 @@ exports.date = {
 exports.point = {
     name: 'GeoJSON Point',
     geospatial: true,
-    test: (v, _, conn) => __awaiter(void 0, void 0, void 0, function* () {
+    test: (v) => getBasicGeoJSONIssues(v, 'Point'),
+    testAsync: (v, conn) => __awaiter(void 0, void 0, void 0, function* () {
         const basicIssues = getBasicGeoJSONIssues(v, 'Point');
         if (basicIssues)
             return basicIssues;
@@ -376,7 +377,8 @@ exports.point = {
 exports.line = {
     name: 'GeoJSON LineString',
     geospatial: true,
-    test: (v, _, conn) => __awaiter(void 0, void 0, void 0, function* () {
+    test: (v) => getBasicGeoJSONIssues(v, 'LineString'),
+    testAsync: (v, conn) => __awaiter(void 0, void 0, void 0, function* () {
         const basicIssues = getBasicGeoJSONIssues(v, 'LineString');
         if (basicIssues)
             return basicIssues;
@@ -398,7 +400,8 @@ exports.line = {
 exports.multiline = {
     name: 'GeoJSON MultiLineString',
     geospatial: true,
-    test: (v, _, conn) => __awaiter(void 0, void 0, void 0, function* () {
+    test: (v) => getBasicGeoJSONIssues(v, 'MultiLineString'),
+    testAsync: (v, conn) => __awaiter(void 0, void 0, void 0, function* () {
         const basicIssues = getBasicGeoJSONIssues(v, 'MultiLineString');
         if (basicIssues)
             return basicIssues;
@@ -420,7 +423,8 @@ exports.multiline = {
 exports.polygon = {
     name: 'GeoJSON Polygon',
     geospatial: true,
-    test: (v, _, conn) => __awaiter(void 0, void 0, void 0, function* () {
+    test: (v) => getBasicGeoJSONIssues(v, 'Polygon'),
+    testAsync: (v, conn) => __awaiter(void 0, void 0, void 0, function* () {
         const basicIssues = getBasicGeoJSONIssues(v, 'Polygon');
         if (basicIssues)
             return basicIssues;
@@ -440,7 +444,8 @@ exports.polygon = {
 exports.multipolygon = {
     name: 'GeoJSON MultiPolygon',
     geospatial: true,
-    test: (v, _, conn) => __awaiter(void 0, void 0, void 0, function* () {
+    test: (v) => getBasicGeoJSONIssues(v, 'MultiPolygon'),
+    testAsync: (v, conn) => __awaiter(void 0, void 0, void 0, function* () {
         const basicIssues = getBasicGeoJSONIssues(v, 'MultiPolygon');
         if (basicIssues)
             return basicIssues;

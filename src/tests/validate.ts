@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { validate } from '../'
 import crime from './911-call.json'
 import should from 'should'

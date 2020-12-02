@@ -117,7 +117,7 @@ const validateField = (path, value) => {
         return true;
     return errors;
 };
-exports.validate = (dataType, { full = true } = {}) => {
+const validate = (dataType, { full = true } = {}) => {
     var _a;
     const errors = [];
     if (!dataType || !is_plain_obj_1.default(dataType)) {
@@ -172,4 +172,5 @@ exports.validate = (dataType, { full = true } = {}) => {
         return true;
     return errors;
 };
+exports.validate = validate;
 //# sourceMappingURL=validate.js.map

@@ -2,15 +2,33 @@ import { GeoJSON } from 'geojson'
 
 export interface Type {
 	name: string
-	valueType?: string
-	test: (value: any, param?: any, conn?: Object) => boolean | Promise<any>
-	hydrate?: (v: any) => any
-	validateValue?: (v: any) => any
+	test: (value: any) => boolean | string
+	testAsync?: (value: any, conn?: Object) => Promise<boolean | string>
 	items?: boolean
 	geospatial?: boolean
-	validators?: any
-	measurements?: any
+	validators?: {
+		[name: string]: Validator
+	}
+	measurements?: {
+		[name: string]: Measurement
+	}
 }
+export interface Validator {
+	name: string
+	valueType?: string
+	test: (value: any, param: any) => boolean
+	testAsync?: (value: any, conn?: Object) => Promise<boolean>
+	validateValue?: (v: any) => any
+}
+export interface Measurement {
+	name: string
+	options: {
+		[name: string]: {
+			name: string
+		}
+	}
+}
+
 export type Coordinate = [ number?, number? ]
 export type Coordinates = (Coordinate|number)[] // [ Coordinate ] | Coordinate
 
@@ -26,21 +44,23 @@ export interface DataType {
 	id: string
 	name: string
 	notes?: string
-	validation?: any
-	official?: boolean
-	schema?: any
 	temporal?: {
 		[name: string]: string
 	}
+	schema: {
+		[name: string]: Field
+	}
 }
 export interface Field {
-	id: string
 	name: string
 	items?: Field
 	notes?: string
 	type: string
-	validation: any
-	measurement: {
-		[name: string]: string
+	validation?: {
+		[name: string]: any
+	}
+	measurement?: {
+		type: string,
+		value: string
 	}
 }

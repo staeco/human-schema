@@ -39,7 +39,7 @@ const validateField = (path, field, value, conn) => __awaiter(void 0, void 0, vo
     const errors = [];
     const { type, items, validation } = field;
     value = serialize(value);
-    const exists = yield requiredValidator.test(value, null, conn);
+    const exists = requiredValidator.test(value, true);
     // if not required and value is empty, bail out
     if ((!validation || !validation.required) && !exists) {
         return true;
@@ -56,7 +56,9 @@ const validateField = (path, field, value, conn) => __awaiter(void 0, void 0, vo
     // top-level type check
     if (!types[type])
         throw new Error(`Invalid type present: ${type}`);
-    const result = yield types[type].test(value, null, conn);
+    const result = types[type].testAsync
+        ? yield types[type].testAsync(value, conn)
+        : types[type].test(value);
     if (result !== true) {
         errors.push({
             path,
@@ -70,7 +72,9 @@ const validateField = (path, field, value, conn) => __awaiter(void 0, void 0, vo
         yield Promise.all(Object.keys(validation).map((k) => __awaiter(void 0, void 0, void 0, function* () {
             const param = validation[k];
             const spec = types[type].validators[k];
-            const vresult = yield spec.test(value, param);
+            const vresult = spec.testAsync
+                ? yield spec.testAsync(value, param)
+                : spec.test(value, param);
             if (vresult !== true) {
                 errors.push({
                     path,
@@ -94,7 +98,7 @@ const validateField = (path, field, value, conn) => __awaiter(void 0, void 0, vo
         return true;
     return errors;
 });
-exports.validateItem = (dataType, item, conn) => __awaiter(void 0, void 0, void 0, function* () {
+const validateItem = (dataType, item, conn) => __awaiter(void 0, void 0, void 0, function* () {
     const errors = [];
     if (!item || typeof item !== 'object' || Array.isArray(item)) {
         errors.push({ value: item, message: 'Not a valid top-level object' });
@@ -109,4 +113,5 @@ exports.validateItem = (dataType, item, conn) => __awaiter(void 0, void 0, void 
         return true;
     return errors;
 });
+exports.validateItem = validateItem;
 //# sourceMappingURL=validateItem.js.map

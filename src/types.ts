@@ -5,7 +5,7 @@ import isValidGeometry from './isValidGeometry'
 import moment from 'moment-timezone'
 import isUnique from 'is-unique'
 import isObject from 'is-plain-obj'
-import { GeoObject, Type } from './typings'
+import { GeoObject, Type, Validator } from './typings'
 
 const isValidDate = (v: Date|string) => {
   if (v instanceof Date) return !isNaN(v.getTime()) // already a date
@@ -23,30 +23,30 @@ const getBasicGeoJSONIssues = (v: GeoObject, type: string) => {
 }
 /*
 Validations:
-  - name (displayed on the )
+  - name (displayed in the UI)
   - validateValue (function that receives the validation value and returns true/false if it is valid)
   - valueType (should be a valid type in the data type system, the FE displays different inputs based on this)
   - test (receives the validation value, and the datum value and returns true/false if the datum value is valid)
 */
-const required: Type = {
+const required: Validator = {
   name: 'Required',
   validateValue: (param: boolean) => param === true,
   test: (v: any) => v != null,
   valueType: 'boolean'
 }
-const enumm: Type = {
+const enumm: Validator = {
   name: 'In List',
   validateValue: (param: any) => Array.isArray(param) && param.length !== 0,
   test: (v: any, param: any) => param.includes(v),
   valueType: 'array'
 }
-const min: Type = {
+const min: Validator = {
   name: 'Minimum',
   validateValue: isNumber,
   test: (v: any, param: number) => v >= param,
   valueType: 'number'
 }
-const max: Type = {
+const max: Validator = {
   name: 'Maximum',
   validateValue: isNumber,
   test: (v: any, param: number) => v <= param,
@@ -320,7 +320,8 @@ export const date: Type = {
 export const point: Type = {
   name: 'GeoJSON Point',
   geospatial: true,
-  test: async (v: any, _, conn: Object) => { // TODO: sequelize conn type
+  test: (v: any) => getBasicGeoJSONIssues(v, 'Point'),
+  testAsync: async (v: any, conn: Object) => { // TODO: sequelize conn type
     const basicIssues = getBasicGeoJSONIssues(v, 'Point')
     if (basicIssues) return basicIssues
     const geojson = await isValidGeoJSON(v)
@@ -359,7 +360,8 @@ export const point: Type = {
 export const line: Type = {
   name: 'GeoJSON LineString',
   geospatial: true,
-  test: async (v: any, _, conn: Object) => {
+  test: (v: any) => getBasicGeoJSONIssues(v, 'LineString'),
+  testAsync: async (v: any, conn: Object) => {
     const basicIssues = getBasicGeoJSONIssues(v, 'LineString')
     if (basicIssues) return basicIssues
     const geojson = await isValidGeoJSON(v)
@@ -378,7 +380,8 @@ export const line: Type = {
 export const multiline: Type = {
   name: 'GeoJSON MultiLineString',
   geospatial: true,
-  test: async (v: any, _, conn: Object) => {
+  test: (v: any) => getBasicGeoJSONIssues(v, 'MultiLineString'),
+  testAsync: async (v: any, conn: Object) => {
     const basicIssues = getBasicGeoJSONIssues(v, 'MultiLineString')
     if (basicIssues) return basicIssues
     const geojson = await isValidGeoJSON(v)
@@ -397,7 +400,8 @@ export const multiline: Type = {
 export const polygon: Type = {
   name: 'GeoJSON Polygon',
   geospatial: true,
-  test: async (v: any, _, conn: Object) => {
+  test: (v: any) => getBasicGeoJSONIssues(v, 'Polygon'),
+  testAsync: async (v: any, conn: Object) => {
     const basicIssues = getBasicGeoJSONIssues(v, 'Polygon')
     if (basicIssues) return basicIssues
     const geojson = await isValidGeoJSON(v)
@@ -414,7 +418,8 @@ export const polygon: Type = {
 export const multipolygon: Type = {
   name: 'GeoJSON MultiPolygon',
   geospatial: true,
-  test: async (v: any, _, conn: Object) => {
+  test: (v: any) => getBasicGeoJSONIssues(v, 'MultiPolygon'),
+  testAsync: async (v: any, conn: Object) => {
     const basicIssues = getBasicGeoJSONIssues(v, 'MultiPolygon')
     if (basicIssues) return basicIssues
     const geojson = await isValidGeoJSON(v)

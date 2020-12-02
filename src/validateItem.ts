@@ -11,7 +11,7 @@ const validateField = async (path: Array<string|number>, field: Field, value: an
   const errors = []
   const { type, items, validation } = field
   value = serialize(value)
-  const exists = await requiredValidator.test(value, null, conn)
+  const exists = requiredValidator.test(value, true)
 
   // if not required and value is empty, bail out
   if ((!validation || !validation.required) && !exists) {
@@ -30,7 +30,9 @@ const validateField = async (path: Array<string|number>, field: Field, value: an
 
   // top-level type check
   if (!types[type]) throw new Error(`Invalid type present: ${type}`)
-  const result = await types[type].test(value, null, conn)
+  const result = types[type].testAsync
+    ? await types[type].testAsync(value, conn)
+    : types[type].test(value)
   if (result !== true) {
     errors.push({
       path,
@@ -45,7 +47,9 @@ const validateField = async (path: Array<string|number>, field: Field, value: an
     await Promise.all(Object.keys(validation).map(async (k) => {
       const param = validation[k]
       const spec = types[type].validators[k]
-      const vresult = await spec.test(value, param)
+      const vresult = spec.testAsync
+        ? await spec.testAsync(value, param)
+        : spec.test(value, param)
       if (vresult !== true) {
         errors.push({
           path,
