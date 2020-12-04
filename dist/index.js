@@ -18,15 +18,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.utils = exports.validate = exports.types = void 0;
+exports.utils = exports.clean = exports.validate = exports.validateItem = exports.types = void 0;
 exports.types = __importStar(require("./types"));
-__exportStar(require("./validateItem"), exports);
+var validateItem_1 = require("./validateItem");
+Object.defineProperty(exports, "validateItem", { enumerable: true, get: function () { return validateItem_1.validateItem; } });
 var validate_1 = require("./validate");
 Object.defineProperty(exports, "validate", { enumerable: true, get: function () { return validate_1.validate; } });
+var clean_1 = require("./clean");
+Object.defineProperty(exports, "clean", { enumerable: true, get: function () { return clean_1.clean; } });
 const isValidGeoJSON = __importStar(require("./isValidGeoJSON"));
 const isValidGeometry = __importStar(require("./isValidGeometry"));
 const isValidCoordinate_1 = require("./isValidCoordinate");

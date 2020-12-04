@@ -1,6 +1,7 @@
 export * as types from './types';
-export * from './validateItem';
+export { validateItem } from './validateItem';
 export { validate } from './validate';
+export { clean } from './clean';
 import * as isValidGeoJSON from './isValidGeoJSON';
 import * as isValidGeometry from './isValidGeometry';
 export declare const utils: {
