@@ -6,7 +6,7 @@ const serialize = (v: any) => v && typeof v.toJSON === 'function' ? v.toJSON() :
 
 const requiredValidator = types.text.validators.required // pull it out of any type, theyre all the same
 
-const validateField = async (path: Array<string|number>, field: Field, value: any, conn?: Object) => {
+const validateField = async (path: Array<string|number>, field: Field, value: any, conn?: Object): Promise<(true|Array<object>)> => {
   if (!field) return true
   const errors = []
   const { type, items, validation } = field
@@ -74,7 +74,7 @@ const validateField = async (path: Array<string|number>, field: Field, value: an
   return errors
 }
 
-export const validateItem = async (dataType: DataType, item: Object, conn?: Object) => {
+export const validateItem = async (dataType: DataType, item: Object, conn?: Object): Promise<(true|Array<object>)> => {
   const errors = []
   if (!item || typeof item !== 'object' || Array.isArray(item)) {
     errors.push({ value: item, message: 'Not a valid top-level object' })

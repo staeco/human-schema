@@ -3,7 +3,7 @@ import { GeoObject } from './typings'
 const q = 'SELECT ST_IsValidDetail(ST_SetSRID(ST_GeomFromGeoJSON($geojson), 4326));'
 
 // conn is any type to remove the need of importing sequelize
-export default async (geojson: GeoObject, conn: any): Promise<boolean|string> => {
+export default async (geojson: GeoObject, conn: any): Promise<true|string> => {
   if (Array.isArray(geojson.coordinates) && geojson.coordinates.length === 0) {
     return 'Coordinates array is empty' // This should be changed to false
   }

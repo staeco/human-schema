@@ -7,7 +7,7 @@ const reserved = new Set(operators)
 const MAX_LENGTH = 128
 const MAX_NOTES_LENGTH = 2048
 
-const validateField = (path: Array<string|number>, value: Field) => {
+const validateField = (path: Array<string|number>, value: Field): (true|Array<object>) => {
   const errors = []
   const lastSegment = String(path[path.length -1])
 
@@ -83,7 +83,7 @@ const validateField = (path: Array<string|number>, value: Field) => {
   return errors
 }
 
-export const validate = (dataType: DataType, { full=true }={}) => {
+export const validate = (dataType: DataType, { full=true }={}): (true|Array<object>) => {
   const errors = []
   if (!dataType || !isObject(dataType)) {
     errors.push({ value: dataType, message: 'Not a valid top-level object' })

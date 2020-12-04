@@ -7,7 +7,7 @@ const ignore = new Set([
   'geometry object cannot contain a "properties" member'
 ])
 
-const validCoordinates = (coords: Coordinates): (boolean|string) => {
+const validCoordinates = (coords: Coordinates): (true|string) => {
   if (!Array.isArray(coords)) return 'Coordinates not an array'
   if (coords.length === 0) return 'Coordinates array is empty'
   if (Array.isArray(coords[0])) {
@@ -23,7 +23,7 @@ const validCoordinates = (coords: Coordinates): (boolean|string) => {
   return isValidCoordinate(coords as Coordinate)
 }
 
-export default async (v: GeoBase): Promise<boolean|string> => {
+export default async (v: GeoBase): Promise<true|string> => {
   const coordinateValidity = validCoordinates(v.coordinates)
   if (coordinateValidity !== true) return `Invalid coordinates${coordinateValidity ? ` - ${coordinateValidity}` : ''}`
   const hints = geojsonhint.hint(v).filter((i) => !ignore.has(i.message))

@@ -14,7 +14,7 @@ const cleanField = (f: Field) =>
     validation: f.validation
   }, (v) => v != null)
 
-export const clean = (dataType: DataType) => ({
+export const clean = (dataType: DataType): DataType => ({
   ...dataType,
   schema: Object.entries(dataType.schema).reduce((acc, [ k, v ]) => {
     acc[k] = cleanField(v)
