@@ -263,8 +263,15 @@ exports.number = {
                 hourOfDay: { name: 'Hour of Day (0-23)' },
                 dayOfWeek: { name: 'Day of Week (1-7)' },
                 dayOfMonth: { name: 'Day of Month (1-31)' },
-                dayOfYear: { name: 'Day of Year (0-366)' },
-                monthOfYear: { name: 'Month of Year (1-12)' }
+                dayOfYear: { name: 'Day of Year (1-366)' },
+                week: { name: 'Week (1-53)' },
+                month: { name: 'Month (1-12)' },
+                customMonth: { name: 'Custom Month (1-12)' },
+                quarter: { name: 'Quarter (1-4)' },
+                customQuarter: { name: 'Custom Quarter (1-4)' },
+                year: { name: 'Year' },
+                customYear: { name: 'Custom Year' },
+                decade: { name: 'Decade' }
             }
         },
         speed: {
@@ -329,6 +336,24 @@ exports.date = {
             validateValue: isValidDate,
             test: (v, param) => new Date(v) <= new Date(param),
             valueType: 'date'
+        }
+    },
+    measurements: {
+        bucket: {
+            name: 'Bucket',
+            options: {
+                second: { name: 'Second' },
+                minute: { name: 'Minute' },
+                hour: { name: 'Hour' },
+                day: { name: 'Day' },
+                week: { name: 'Week' },
+                month: { name: 'Month' },
+                quarter: { name: 'Quarter' },
+                customQuarter: { name: 'Custom Quarter' },
+                year: { name: 'Year' },
+                customYear: { name: 'Custom Year' },
+                decade: { name: 'Decade' },
+            }
         }
     }
 };
