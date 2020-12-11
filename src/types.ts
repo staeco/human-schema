@@ -244,7 +244,7 @@ export const number: Type = {
       }
     },
     datePart: {
-      name: 'Date Segment',
+      name: 'Part of Date',
       options: {
         hourOfDay: { name: 'Hour of Day (0-23)' },
         dayOfWeek: { name: 'Day of Week (1-7)' },
