@@ -1,6 +1,6 @@
 {
 	"name": "human-schema",
-	"version": "1.1.6",
+	"version": "1.2.0",
 	"description": "User friendly declarative schemas",
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
@@ -17,6 +17,9 @@
 	"files": [
 		"dist"
 	],
+	"engines": {
+		"node": ">=14"
+	},
 	"scripts": {
 		"build": "tsc -b && rm -rf dist/tests",
 		"clean": "rm -rf dist",

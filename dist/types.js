@@ -1,13 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -361,17 +352,17 @@ exports.point = {
     name: 'GeoJSON Point',
     geospatial: true,
     test: (v) => getBasicGeoJSONIssues(v, 'Point'),
-    testAsync: (v, conn) => __awaiter(void 0, void 0, void 0, function* () {
+    testAsync: async (v, conn) => {
         const basicIssues = getBasicGeoJSONIssues(v, 'Point');
         if (basicIssues !== true)
             return basicIssues;
-        const geojson = yield isValidGeoJSON_1.default(v);
+        const geojson = await isValidGeoJSON_1.default(v);
         if (geojson !== true)
             return geojson; // return the reason
         if (conn)
             return isValidGeometry_1.default(v, conn);
         return true;
-    }),
+    },
     validators: {
         required,
         minLongitude: {
@@ -404,17 +395,17 @@ exports.line = {
     name: 'GeoJSON LineString',
     geospatial: true,
     test: (v) => getBasicGeoJSONIssues(v, 'LineString'),
-    testAsync: (v, conn) => __awaiter(void 0, void 0, void 0, function* () {
+    testAsync: async (v, conn) => {
         const basicIssues = getBasicGeoJSONIssues(v, 'LineString');
         if (basicIssues !== true)
             return basicIssues;
-        const geojson = yield isValidGeoJSON_1.default(v);
+        const geojson = await isValidGeoJSON_1.default(v);
         if (geojson !== true)
             return geojson; // return the reason
         if (conn)
             return isValidGeometry_1.default(v, conn);
         return true;
-    }),
+    },
     validators: {
         required
         //minPoints,
@@ -427,17 +418,17 @@ exports.multiline = {
     name: 'GeoJSON MultiLineString',
     geospatial: true,
     test: (v) => getBasicGeoJSONIssues(v, 'MultiLineString'),
-    testAsync: (v, conn) => __awaiter(void 0, void 0, void 0, function* () {
+    testAsync: async (v, conn) => {
         const basicIssues = getBasicGeoJSONIssues(v, 'MultiLineString');
         if (basicIssues !== true)
             return basicIssues;
-        const geojson = yield isValidGeoJSON_1.default(v);
+        const geojson = await isValidGeoJSON_1.default(v);
         if (geojson !== true)
             return geojson; // return the reason
         if (conn)
             return isValidGeometry_1.default(v, conn);
         return true;
-    }),
+    },
     validators: {
         required
         //minPoints,
@@ -450,17 +441,17 @@ exports.polygon = {
     name: 'GeoJSON Polygon',
     geospatial: true,
     test: (v) => getBasicGeoJSONIssues(v, 'Polygon'),
-    testAsync: (v, conn) => __awaiter(void 0, void 0, void 0, function* () {
+    testAsync: async (v, conn) => {
         const basicIssues = getBasicGeoJSONIssues(v, 'Polygon');
         if (basicIssues !== true)
             return basicIssues;
-        const geojson = yield isValidGeoJSON_1.default(v);
+        const geojson = await isValidGeoJSON_1.default(v);
         if (geojson !== true)
             return geojson; // return the reason
         if (conn)
             return isValidGeometry_1.default(v, conn);
         return true;
-    }),
+    },
     validators: {
         required
         //minArea,
@@ -471,17 +462,17 @@ exports.multipolygon = {
     name: 'GeoJSON MultiPolygon',
     geospatial: true,
     test: (v) => getBasicGeoJSONIssues(v, 'MultiPolygon'),
-    testAsync: (v, conn) => __awaiter(void 0, void 0, void 0, function* () {
+    testAsync: async (v, conn) => {
         const basicIssues = getBasicGeoJSONIssues(v, 'MultiPolygon');
         if (basicIssues !== true)
             return basicIssues;
-        const geojson = yield isValidGeoJSON_1.default(v);
+        const geojson = await isValidGeoJSON_1.default(v);
         if (geojson !== true)
             return geojson; // return the reason
         if (conn)
             return isValidGeometry_1.default(v, conn);
         return true;
-    }),
+    },
     validators: {
         required
         //minArea,

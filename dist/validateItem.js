@@ -18,22 +18,13 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.validateItem = void 0;
 const types = __importStar(require("./types"));
 // support JS objects coming in, since all validators expect JSON
 const serialize = (v) => v && typeof v.toJSON === 'function' ? v.toJSON() : v;
 const requiredValidator = types.text.validators.required; // pull it out of any type, theyre all the same
-const validateField = (path, field, value, conn) => __awaiter(void 0, void 0, void 0, function* () {
+const validateField = async (path, field, value, conn) => {
     if (!field)
         return true;
     const errors = [];
@@ -57,7 +48,7 @@ const validateField = (path, field, value, conn) => __awaiter(void 0, void 0, vo
     if (!types[type])
         throw new Error(`Invalid type present: ${type}`);
     const result = types[type].testAsync
-        ? yield types[type].testAsync(value, conn)
+        ? await types[type].testAsync(value, conn)
         : types[type].test(value);
     if (result !== true) {
         errors.push({
@@ -69,11 +60,11 @@ const validateField = (path, field, value, conn) => __awaiter(void 0, void 0, vo
     }
     // check all type specific validators
     if (validation) {
-        yield Promise.all(Object.keys(validation).map((k) => __awaiter(void 0, void 0, void 0, function* () {
+        await Promise.all(Object.keys(validation).map(async (k) => {
             const param = validation[k];
             const spec = types[type].validators[k];
             const vresult = spec.testAsync
-                ? yield spec.testAsync(value, param)
+                ? await spec.testAsync(value, param)
                 : spec.test(value, param);
             if (vresult !== true) {
                 errors.push({
@@ -84,34 +75,34 @@ const validateField = (path, field, value, conn) => __awaiter(void 0, void 0, vo
                     message: vresult || `Failed ${spec.name} validation`
                 });
             }
-        })));
+        }));
     }
     // subitems
     if (items) {
-        yield Promise.all(value.map((subvalue, index) => __awaiter(void 0, void 0, void 0, function* () {
-            const fieldErrors = yield validateField([...path, index], items, serialize(subvalue), conn);
+        await Promise.all(value.map(async (subvalue, index) => {
+            const fieldErrors = await validateField([...path, index], items, serialize(subvalue), conn);
             if (fieldErrors !== true)
                 errors.push(...fieldErrors);
-        })));
+        }));
     }
     if (errors.length === 0)
         return true;
     return errors;
-});
-const validateItem = (dataType, item, conn) => __awaiter(void 0, void 0, void 0, function* () {
+};
+const validateItem = async (dataType, item, conn) => {
     const errors = [];
     if (!item || typeof item !== 'object' || Array.isArray(item)) {
         errors.push({ value: item, message: 'Not a valid top-level object' });
         return errors;
     }
-    yield Promise.all(Object.keys(dataType.schema).map((k) => __awaiter(void 0, void 0, void 0, function* () {
-        const fieldErrors = yield validateField([k], dataType.schema[k], item[k], conn);
+    await Promise.all(Object.keys(dataType.schema).map(async (k) => {
+        const fieldErrors = await validateField([k], dataType.schema[k], item[k], conn);
         if (fieldErrors !== true)
             errors.push(...fieldErrors);
-    })));
+    }));
     if (errors.length === 0)
         return true;
     return errors;
-});
+};
 exports.validateItem = validateItem;
 //# sourceMappingURL=validateItem.js.map

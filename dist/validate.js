@@ -118,7 +118,6 @@ const validateField = (path, value) => {
     return errors;
 };
 const validate = (dataType, { full = true } = {}) => {
-    var _a;
     const errors = [];
     if (!dataType || !is_plain_obj_1.default(dataType)) {
         errors.push({ value: dataType, message: 'Not a valid top-level object' });
@@ -164,7 +163,7 @@ const validate = (dataType, { full = true } = {}) => {
             errors.push({ value: dataType.temporal.primary, path: ['temporal', 'primary'], message: 'This field is required' });
         if (typeof dataType.temporal.primary !== 'string')
             errors.push({ value: dataType.temporal.primary, path: ['temporal', 'primary'], message: 'Not a valid string value' });
-        const primarySchema = (_a = dataType.schema) === null || _a === void 0 ? void 0 : _a[dataType.temporal.primary];
+        const primarySchema = dataType.schema?.[dataType.temporal.primary];
         if (!primarySchema || primarySchema.type !== 'date')
             errors.push({ value: dataType.temporal.primary, path: ['temporal', 'primary'], message: 'Not a valid date field' });
     }

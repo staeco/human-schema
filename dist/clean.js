@@ -16,9 +16,12 @@ const cleanField = (f) => lodash_pickby_1.default({
     items: f.items ? cleanField(f.items) : undefined,
     validation: f.validation
 }, (v) => v != null);
-const clean = (dataType) => (Object.assign(Object.assign({}, dataType), { schema: Object.entries(dataType.schema).reduce((acc, [k, v]) => {
+const clean = (dataType) => ({
+    ...dataType,
+    schema: Object.entries(dataType.schema).reduce((acc, [k, v]) => {
         acc[k] = cleanField(v);
         return acc;
-    }, {}) }));
+    }, {})
+});
 exports.clean = clean;
 //# sourceMappingURL=clean.js.map
