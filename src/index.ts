@@ -8,9 +8,9 @@ import * as isValidGeometry from './isValidGeometry'
 import { isValidCoordinate, lat, lon } from './isValidCoordinate'
 
 export const utils = {
-	isValidGeometry,
-	isValidGeoJSON,
-	isValidCoordinate,
-	lat,
-	lon
+  isValidGeometry,
+  isValidGeoJSON,
+  isValidCoordinate,
+  lat,
+  lon
 }

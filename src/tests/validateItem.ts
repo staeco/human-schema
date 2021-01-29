@@ -84,7 +84,7 @@ describe('tables#dataType#validateItem', () => {
       }
     }
     const item = {
-      names: [ 'eric', 'john' ]
+      names: ['eric', 'john']
     }
     should(validate(spec)).equal(true)
     should(await validateItem(spec, item)).equal(true)
@@ -140,7 +140,7 @@ describe('tables#dataType#validateItem', () => {
     const item = {
       location: {
         type: 'Point',
-        coordinates: [ 1, 1 ]
+        coordinates: [1, 1]
       }
     }
     should(validate(spec)).equal(true)
@@ -162,13 +162,13 @@ describe('tables#dataType#validateItem', () => {
     const item = {
       location: {
         type: 'Point',
-        coordinates: [ 0, 0 ]
+        coordinates: [0, 0]
       }
     }
     should(validate(spec)).equal(true)
     should(await validateItem(spec, item)).eql([
       {
-        path: [ 'location' ],
+        path: ['location'],
         message: 'Invalid coordinates - Longitude and latitude were both 0',
         value: item.location
       }
@@ -190,13 +190,13 @@ describe('tables#dataType#validateItem', () => {
     const item = {
       location: {
         type: 'Point',
-        coordinates: [ 1000, 1000 ]
+        coordinates: [1000, 1000]
       }
     }
     should(validate(spec)).equal(true)
     should(await validateItem(spec, item)).eql([
       {
-        path: [ 'location' ],
+        path: ['location'],
         message: 'Invalid coordinates - Latitude greater than 90',
         value: item.location
       }
@@ -221,7 +221,7 @@ describe('tables#dataType#validateItem', () => {
     should(validate(spec)).equal(true)
     should(await validateItem(spec, item)).eql([
       {
-        path: [ 'area' ],
+        path: ['area'],
         message: 'Invalid coordinates - Latitude greater than 90',
         value: item.area
       }
@@ -243,13 +243,13 @@ describe('tables#dataType#validateItem', () => {
     const item = {
       location: {
         type: 'fgkdf',
-        coordinates: [ 1, 1 ]
+        coordinates: [1, 1]
       }
     }
     should(validate(spec)).equal(true)
     should(await validateItem(spec, item)).eql([
       {
-        path: [ 'location' ],
+        path: ['location'],
         message: 'Not a valid type value (Expected Point not fgkdf)',
         value: item.location
       }
@@ -277,7 +277,7 @@ describe('tables#dataType#validateItem', () => {
     should(validate(spec)).equal(true)
     should(await validateItem(spec, item)).eql([
       {
-        path: [ 'location' ],
+        path: ['location'],
         message: 'Invalid coordinates - Coordinates not an array',
         value: item.location
       }
@@ -305,7 +305,7 @@ describe('tables#dataType#validateItem', () => {
     should(validate(spec)).equal(true)
     should(await validateItem(spec, item)).eql([
       {
-        path: [ 'location' ],
+        path: ['location'],
         message: 'Invalid coordinates - Coordinates array is empty',
         value: item.location
       }
@@ -328,16 +328,22 @@ describe('tables#dataType#validateItem', () => {
     const item = {
       area: {
         type: 'Polygon',
-        coordinates: [ [
-          [ 1, 1 ], [ 1, 3 ], [ 3, 3 ],
-          [ 3, 1 ], [ 0, 4 ], [ 1, 1 ]
-        ] ]
+        coordinates: [
+          [
+            [1, 1],
+            [1, 3],
+            [3, 3],
+            [3, 1],
+            [0, 4],
+            [1, 1]
+          ]
+        ]
       }
     }
     should(validate(spec)).equal(true)
     should(await validateItem(spec, item, client)).eql([
       {
-        path: [ 'area' ],
+        path: ['area'],
         message: 'Self-intersection',
         value: item.area
       }
@@ -359,14 +365,18 @@ describe('tables#dataType#validateItem', () => {
     const item = {
       area: {
         type: 'Polygon',
-        coordinates: [ [
-          [ 1, 1 ], [ 1, 3 ], [ 3, 3 ],
-          [ 3, 1 ], [ 1, 1 ]
-        ] ]
+        coordinates: [
+          [
+            [1, 1],
+            [1, 3],
+            [3, 3],
+            [3, 1],
+            [1, 1]
+          ]
+        ]
       }
     }
     should(validate(spec)).equal(true)
     should(await validateItem(spec, item)).equal(true)
   })
 })
-

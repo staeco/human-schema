@@ -121,9 +121,7 @@ npm install human-schema --save
     }
   }
 }
-
 ```
-
 
 ## DB Support
 
@@ -132,6 +130,5 @@ If you optionally want deep geospatial validation, you can provide a postgres co
 [downloads-image]: http://img.shields.io/npm/dm/human-schema.svg
 [npm-url]: https://npmjs.org/package/human-schema
 [npm-image]: http://img.shields.io/npm/v/human-schema.svg
-
 [travis-url]: https://travis-ci.org/staeco/human-schema
 [travis-image]: https://travis-ci.org/staeco/human-schema.png?branch=master

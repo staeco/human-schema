@@ -1,50 +1,64 @@
 {
-	"name": "human-schema",
-	"version": "1.2.0",
-	"description": "User friendly declarative schemas",
-	"main": "./dist/index.js",
-	"types": "./dist/index.d.ts",
-	"keywords": [],
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/staeco/human-schema.git"
-	},
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/staeco/human-schema/issues"
-	},
-	"homepage": "https://github.com/staeco/human-schema#readme",
-	"files": [
-		"dist"
-	],
-	"engines": {
-		"node": ">=14"
-	},
-	"scripts": {
-		"build": "tsc -b && rm -rf dist/tests",
-		"clean": "rm -rf dist",
-		"test-make-user": "createuser postgres -lsd",
-		"test-db": "dropdb human-schema -U postgres || true && createdb human-schema -U postgres && psql human-schema -c 'CREATE EXTENSION IF NOT EXISTS postgis;' -U postgres",
-		"test": "npm run-script test-db && mocha -r ts-node/register src/tests/*.ts --exit",
-		"test-no-db": "NO_DB=true mocha -r ts-node/register src/tests/*.ts --exit"
-	},
-	"devDependencies": {
-		"@types/geojson": "^7946.0.7",
-		"@types/mocha": "^8.0.0",
-		"mocha": "^8.0.1",
-		"pg": "^8.3.0",
-		"sequelize": "^6.3.3",
-		"should": "^13.2.3",
-		"ts-node": "^9.0.0",
-		"typescript": "^4.0.0"
-	},
-	"dependencies": {
-		"@mapbox/geojsonhint": "^3.0.0",
-		"@types/lodash.pickby": "^4.6.6",
-		"is-plain-obj": "^3.0.0",
-		"is-unique": "^0.0.1",
-		"lodash.pickby": "^4.6.0",
-		"moment-timezone": "^0.5.31",
-		"validator": "^13.1.1"
-	}
+  "name": "human-schema",
+  "version": "1.2.1",
+  "description": "User friendly declarative schemas",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "keywords": [
+    "data type",
+    "validation",
+    "specification",
+    "schema"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/staeco/human-schema.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/staeco/human-schema/issues"
+  },
+  "homepage": "https://github.com/staeco/human-schema#readme",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=14"
+  },
+  "scripts": {
+    "lint": "prettier --write .",
+    "build": "npm run clean && tsc -b && rm -rf dist/tests",
+    "clean": "rm -rf dist",
+    "test-make-user": "createuser postgres -lsd",
+    "test-db": "dropdb human-schema -U postgres || true && createdb human-schema -U postgres && psql human-schema -c 'CREATE EXTENSION IF NOT EXISTS postgis;' -U postgres",
+    "test": "npm run-script test-db && mocha -r ts-node/register src/tests/*.ts --exit",
+    "test-no-db": "NO_DB=true mocha -r ts-node/register src/tests/*.ts --exit"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "devDependencies": {
+    "@types/geojson": "^7946.0.7",
+    "@types/mocha": "^8.0.0",
+    "@types/lodash.pickby": "^4.6.6",
+    "husky": "^4.3.8",
+    "mocha": "^8.0.1",
+    "pg": "^8.3.0",
+    "prettier": "^2.2.1",
+    "pretty-quick": "^3.1.0",
+    "sequelize": "^6.3.3",
+    "should": "^13.2.3",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.0"
+  },
+  "dependencies": {
+    "@mapbox/geojsonhint": "^3.0.0",
+    "is-plain-obj": "^3.0.0",
+    "is-unique": "^0.0.1",
+    "lodash.pickby": "^4.6.0",
+    "moment-timezone": "^0.5.31",
+    "validator": "^13.1.1"
+  }
 }

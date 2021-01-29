@@ -13,12 +13,12 @@ describe('tables#dataType#validate', () => {
       value: null,
       message: 'Not a valid top-level object'
     })
-		// @ts-ignore
+    // @ts-ignore
     should(validate(1)).containEql({
       value: 1,
       message: 'Not a valid top-level object'
     })
-		// @ts-ignore
+    // @ts-ignore
     should(validate('123')).containEql({
       value: '123',
       message: 'Not a valid top-level object'
@@ -26,33 +26,33 @@ describe('tables#dataType#validate', () => {
   })
 
   it('validate() should return errors on missing id', async () => {
-		// @ts-ignore
+    // @ts-ignore
     should(validate({})).containEql({
-      path: [ 'id' ],
+      path: ['id'],
       message: 'This field is required',
       value: undefined
     })
   })
   it('validate() should return errors on bad id', async () => {
-		// @ts-ignore
+    // @ts-ignore
     should(validate({ id: 1 })).containEql({
       value: 1,
-      path: [ 'id' ],
+      path: ['id'],
       message: 'Not a valid text value'
     })
   })
   it('validate() should return errors on missing name', async () => {
-		// @ts-ignore
+    // @ts-ignore
     should(validate({ id: '1' })).containEql({
-      path: [ 'name' ],
+      path: ['name'],
       message: 'This field is required',
       value: undefined
     })
   })
   it('validate() should return errors on bad name', async () => {
-		// @ts-ignore
+    // @ts-ignore
     should(validate({ id: '1', name: 1 })).containEql({
-      path: [ 'name' ],
+      path: ['name'],
       value: 1,
       message: 'Not a valid text value'
     })
@@ -69,7 +69,7 @@ describe('tables#dataType#validate', () => {
     }
     should(validate(spec)).eql([
       {
-        path: [ 'schema', 'dummy', 'name' ],
+        path: ['schema', 'dummy', 'name'],
         message: 'This field is required',
         value: undefined
       }
@@ -88,7 +88,7 @@ describe('tables#dataType#validate', () => {
     }
     should(validate(spec)).eql([
       {
-        path: [ 'schema', '$or' ],
+        path: ['schema', '$or'],
         message: 'Not a valid field name, $or is reserved',
         value: '$or'
       }
@@ -107,7 +107,7 @@ describe('tables#dataType#validate', () => {
     }
     should(validate(spec)).eql([
       {
-        path: [ 'schema', 'dummy', 'name' ],
+        path: ['schema', 'dummy', 'name'],
         value: 123,
         message: 'Not a valid text value'
       }
@@ -126,7 +126,7 @@ describe('tables#dataType#validate', () => {
     }
     should(validate(spec)).eql([
       {
-        path: [ 'schema', 'dummy', 'name' ],
+        path: ['schema', 'dummy', 'name'],
         value: '',
         message: 'This field is required'
       }
@@ -145,7 +145,7 @@ describe('tables#dataType#validate', () => {
     }
     should(validate(spec)).eql([
       {
-        path: [ 'schema', 'dummy', 'type' ],
+        path: ['schema', 'dummy', 'type'],
         value: '',
         message: 'This field is required'
       }
@@ -164,7 +164,7 @@ describe('tables#dataType#validate', () => {
     }
     should(validate(spec)).eql([
       {
-        path: [ 'schema', 'dummy', 'type' ],
+        path: ['schema', 'dummy', 'type'],
         message: 'Not a valid type value',
         value: 'nothing'
       }
@@ -184,7 +184,7 @@ describe('tables#dataType#validate', () => {
     }
     should(validate(spec)).eql([
       {
-        path: [ 'schema', 'dummy', 'measurement' ],
+        path: ['schema', 'dummy', 'measurement'],
         message: 'Not a valid object value',
         value: 123
       }
@@ -206,7 +206,7 @@ describe('tables#dataType#validate', () => {
     }
     should(validate(spec)).eql([
       {
-        path: [ 'schema', 'dummy', 'measurement', 'type' ],
+        path: ['schema', 'dummy', 'measurement', 'type'],
         message: 'Not a valid measurement type value',
         value: 123
       }
@@ -229,7 +229,7 @@ describe('tables#dataType#validate', () => {
     }
     should(validate(spec)).eql([
       {
-        path: [ 'schema', 'dummy', 'measurement', 'value' ],
+        path: ['schema', 'dummy', 'measurement', 'value'],
         message: 'Not a valid measurement value',
         value: 123
       }
@@ -252,7 +252,7 @@ describe('tables#dataType#validate', () => {
     }
     should(validate(spec)).eql([
       {
-        path: [ 'schema', 'dummy', 'measurement' ],
+        path: ['schema', 'dummy', 'measurement'],
         message: 'This field should not exist for this type',
         value: spec.schema.dummy.measurement
       }
@@ -291,7 +291,7 @@ describe('tables#dataType#validate', () => {
     }
     should(validate(spec)).eql([
       {
-        path: [ 'schema', 'dummy', 'validation', 'test' ],
+        path: ['schema', 'dummy', 'validation', 'test'],
         message: 'Not a valid validation key',
         value: 'test'
       }
@@ -313,7 +313,7 @@ describe('tables#dataType#validate', () => {
     }
     should(validate(spec)).eql([
       {
-        path: [ 'schema', 'dummy', 'validation', 'minLength' ],
+        path: ['schema', 'dummy', 'validation', 'minLength'],
         message: 'Not a valid validation value',
         value: true
       }

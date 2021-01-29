@@ -69,21 +69,29 @@ describe('tables#dataType#types', () => {
     should(types.point.test(' ')).be.false
     should(types.point.test('abc')).be.false
     should(types.point.test(new Date())).be.false
-    should(types.point.test({
-      type: 'Point'
-    })).be.false
-    should(types.point.test({
-      type: 'Point',
-      coordinates: [ 900, -30 ]
-    })).be.false
-    should(types.point.test({
-      type: 'LineString',
-      coordinates: [ 90, 30 ]
-    })).be.false
-    should(types.point.test({
-      type: 'Point',
-      coordinates: [ 90, 30 ]
-    })).be.true
+    should(
+      types.point.test({
+        type: 'Point'
+      })
+    ).be.false
+    should(
+      types.point.test({
+        type: 'Point',
+        coordinates: [900, -30]
+      })
+    ).be.false
+    should(
+      types.point.test({
+        type: 'LineString',
+        coordinates: [90, 30]
+      })
+    ).be.false
+    should(
+      types.point.test({
+        type: 'Point',
+        coordinates: [90, 30]
+      })
+    ).be.true
   })
   it('types.line should accept a valid line', async () => {
     should(types.line.test({})).be.false
@@ -95,18 +103,27 @@ describe('tables#dataType#types', () => {
     should(types.line.test(' ')).be.false
     should(types.line.test('abc')).be.false
     should(types.line.test(new Date())).be.false
-    should(types.line.test({
-      type: 'Point',
-      coordinates: [ 90, 30 ]
-    })).be.false
-    should(types.line.test({
-      type: 'LineString',
-      coordinates: [ 90, 30 ]
-    })).be.false
-    should(types.line.test({
-      type: 'LineString',
-      coordinates: [ [ 90, 30 ], [ 91, 31 ] ]
-    })).be.true
+    should(
+      types.line.test({
+        type: 'Point',
+        coordinates: [90, 30]
+      })
+    ).be.false
+    should(
+      types.line.test({
+        type: 'LineString',
+        coordinates: [90, 30]
+      })
+    ).be.false
+    should(
+      types.line.test({
+        type: 'LineString',
+        coordinates: [
+          [90, 30],
+          [91, 31]
+        ]
+      })
+    ).be.true
   })
   it('types.multiline should accept a valid multiline', async () => {
     should(types.multiline.test({})).be.false
@@ -118,22 +135,36 @@ describe('tables#dataType#types', () => {
     should(types.multiline.test(' ')).be.false
     should(types.multiline.test('abc')).be.false
     should(types.multiline.test(new Date())).be.false
-    should(types.multiline.test({
-      type: 'Point',
-      coordinates: [ 90, 30 ]
-    })).be.false
-    should(types.multiline.test({
-      type: 'LineString',
-      coordinates: [ 90, 30 ]
-    })).be.false
-    should(types.multiline.test({
-      type: 'LineString',
-      coordinates: [ [ 90, 30 ], [ 91, 31 ] ]
-    })).be.false
-    should(types.multiline.test({
-      type: 'MultiLineString',
-      coordinates: [ [ 90, 30 ], [ 91, 31 ] ]
-    })).be.true
+    should(
+      types.multiline.test({
+        type: 'Point',
+        coordinates: [90, 30]
+      })
+    ).be.false
+    should(
+      types.multiline.test({
+        type: 'LineString',
+        coordinates: [90, 30]
+      })
+    ).be.false
+    should(
+      types.multiline.test({
+        type: 'LineString',
+        coordinates: [
+          [90, 30],
+          [91, 31]
+        ]
+      })
+    ).be.false
+    should(
+      types.multiline.test({
+        type: 'MultiLineString',
+        coordinates: [
+          [90, 30],
+          [91, 31]
+        ]
+      })
+    ).be.true
   })
   it('types.polygon should accept a valid polygon', async () => {
     should(types.polygon.test({})).be.false
@@ -145,26 +176,45 @@ describe('tables#dataType#types', () => {
     should(types.polygon.test(' ')).be.false
     should(types.polygon.test('abc')).be.false
     should(types.polygon.test(new Date())).be.false
-    should(types.polygon.test({
-      type: 'Point',
-      coordinates: [ 90, 30 ]
-    })).be.false
-    should(types.polygon.test({
-      type: 'LineString',
-      coordinates: [ 90, 30 ]
-    })).be.false
-    should(types.polygon.test({
-      type: 'LineString',
-      coordinates: [ [ 90, 30 ], [ 91, 31 ] ]
-    })).be.false
-    should(types.polygon.test({
-      type: 'MultiLineString',
-      coordinates: [ [ 90, 30 ], [ 91, 31 ] ]
-    })).be.false
-    should(types.polygon.test({
-      type: 'Polygon',
-      coordinates: [ [ 90, 30 ], [ 91, 31 ] ]
-    })).be.true
+    should(
+      types.polygon.test({
+        type: 'Point',
+        coordinates: [90, 30]
+      })
+    ).be.false
+    should(
+      types.polygon.test({
+        type: 'LineString',
+        coordinates: [90, 30]
+      })
+    ).be.false
+    should(
+      types.polygon.test({
+        type: 'LineString',
+        coordinates: [
+          [90, 30],
+          [91, 31]
+        ]
+      })
+    ).be.false
+    should(
+      types.polygon.test({
+        type: 'MultiLineString',
+        coordinates: [
+          [90, 30],
+          [91, 31]
+        ]
+      })
+    ).be.false
+    should(
+      types.polygon.test({
+        type: 'Polygon',
+        coordinates: [
+          [90, 30],
+          [91, 31]
+        ]
+      })
+    ).be.true
   })
   it('types.multipolygon should accept a valid multipolygon', async () => {
     should(types.multipolygon.test({})).be.false
@@ -176,28 +226,47 @@ describe('tables#dataType#types', () => {
     should(types.multipolygon.test(' ')).be.false
     should(types.multipolygon.test('abc')).be.false
     should(types.multipolygon.test(new Date())).be.false
-    should(types.multipolygon.test({
-      type: 'Point',
-      coordinates: [ 90, 30 ]
-    })).be.false
-    should(types.multipolygon.test({
-      type: 'LineString',
-      coordinates: [ 90, 30 ]
-    })).be.false
-    should(types.multipolygon.test({
-      type: 'LineString',
-      coordinates: [ [ 90, 30 ], [ 91, 31 ] ]
-    })).be.false
-    should(types.multipolygon.test({
-      type: 'MultiLineString',
-      coordinates: [ [ 90, 30 ], [ 91, 31 ] ]
-    })).be.false
-    should(types.multipolygon.test({
-      type: 'MultiPolygon',
-      coordinates: [ [ 90, 30 ], [ 91, 31 ] ]
-    })).be.true
+    should(
+      types.multipolygon.test({
+        type: 'Point',
+        coordinates: [90, 30]
+      })
+    ).be.false
+    should(
+      types.multipolygon.test({
+        type: 'LineString',
+        coordinates: [90, 30]
+      })
+    ).be.false
+    should(
+      types.multipolygon.test({
+        type: 'LineString',
+        coordinates: [
+          [90, 30],
+          [91, 31]
+        ]
+      })
+    ).be.false
+    should(
+      types.multipolygon.test({
+        type: 'MultiLineString',
+        coordinates: [
+          [90, 30],
+          [91, 31]
+        ]
+      })
+    ).be.false
+    should(
+      types.multipolygon.test({
+        type: 'MultiPolygon',
+        coordinates: [
+          [90, 30],
+          [91, 31]
+        ]
+      })
+    ).be.true
   })
-  
+
   it('types.point should accept a valid point async', async () => {
     should(await types.point.testAsync({}, client)).be.false
     should(await types.point.testAsync(null, client)).be.false
@@ -209,21 +278,41 @@ describe('tables#dataType#types', () => {
     should(await types.point.testAsync(' ', client)).be.false
     should(await types.point.testAsync('abc', client)).be.false
     should(await types.point.testAsync(new Date(), client)).be.false
-    should(await types.point.testAsync({
-      type: 'Point'
-    }, client)).be.false
-    should(await types.point.testAsync({
-      type: 'Point',
-      coordinates: [ 900, -30 ]
-    }, client)).be.false
-    should(await types.point.testAsync({
-      type: 'LineString',
-      coordinates: [ 90, 30 ]
-    }, client)).be.false
-    should(await types.point.testAsync({
-      type: 'Point',
-      coordinates: [ 90, 30 ]
-    }, client)).be.true
+    should(
+      await types.point.testAsync(
+        {
+          type: 'Point'
+        },
+        client
+      )
+    ).be.false
+    should(
+      await types.point.testAsync(
+        {
+          type: 'Point',
+          coordinates: [900, -30]
+        },
+        client
+      )
+    ).be.false
+    should(
+      await types.point.testAsync(
+        {
+          type: 'LineString',
+          coordinates: [90, 30]
+        },
+        client
+      )
+    ).be.false
+    should(
+      await types.point.testAsync(
+        {
+          type: 'Point',
+          coordinates: [90, 30]
+        },
+        client
+      )
+    ).be.true
   })
   it('types.line should accept a valid line async', async () => {
     should(await types.line.testAsync({}, client)).be.false
@@ -235,18 +324,36 @@ describe('tables#dataType#types', () => {
     should(await types.line.testAsync(' ', client)).be.false
     should(await types.line.testAsync('abc', client)).be.false
     should(await types.line.testAsync(new Date(), client)).be.false
-    should(await types.line.testAsync({
-      type: 'Point',
-      coordinates: [ 90, 30 ]
-    }, client)).be.false
-    should(await types.line.testAsync({
-      type: 'LineString',
-      coordinates: [ 90, 30 ]
-    }, client)).be.false
-    should(await types.line.testAsync({
-      type: 'LineString',
-      coordinates: [ [ 90, 30 ], [ 91, 31 ] ]
-    }, client)).be.true
+    should(
+      await types.line.testAsync(
+        {
+          type: 'Point',
+          coordinates: [90, 30]
+        },
+        client
+      )
+    ).be.false
+    should(
+      await types.line.testAsync(
+        {
+          type: 'LineString',
+          coordinates: [90, 30]
+        },
+        client
+      )
+    ).be.false
+    should(
+      await types.line.testAsync(
+        {
+          type: 'LineString',
+          coordinates: [
+            [90, 30],
+            [91, 31]
+          ]
+        },
+        client
+      )
+    ).be.true
   })
   it('types.multiline should accept a valid multiline async', async () => {
     should(await types.multiline.testAsync({}, client)).be.false
@@ -258,22 +365,48 @@ describe('tables#dataType#types', () => {
     should(await types.multiline.testAsync(' ', client)).be.false
     should(await types.multiline.testAsync('abc', client)).be.false
     should(await types.multiline.testAsync(new Date(), client)).be.false
-    should(await types.multiline.testAsync({
-      type: 'Point',
-      coordinates: [ 90, 30 ]
-    }, client)).be.false
-    should(await types.multiline.testAsync({
-      type: 'LineString',
-      coordinates: [ 90, 30 ]
-    }, client)).be.false
-    should(await types.multiline.testAsync({
-      type: 'LineString',
-      coordinates: [ [ 90, 30 ], [ 91, 31 ] ]
-    }, client)).be.false
-    should(await types.multiline.testAsync({
-      type: 'MultiLineString',
-      coordinates: [ [ 90, 30 ], [ 91, 31 ] ]
-    }, client)).be.true
+    should(
+      await types.multiline.testAsync(
+        {
+          type: 'Point',
+          coordinates: [90, 30]
+        },
+        client
+      )
+    ).be.false
+    should(
+      await types.multiline.testAsync(
+        {
+          type: 'LineString',
+          coordinates: [90, 30]
+        },
+        client
+      )
+    ).be.false
+    should(
+      await types.multiline.testAsync(
+        {
+          type: 'LineString',
+          coordinates: [
+            [90, 30],
+            [91, 31]
+          ]
+        },
+        client
+      )
+    ).be.false
+    should(
+      await types.multiline.testAsync(
+        {
+          type: 'MultiLineString',
+          coordinates: [
+            [90, 30],
+            [91, 31]
+          ]
+        },
+        client
+      )
+    ).be.true
   })
   it('types.polygon should accept a valid polygon async', async () => {
     should(await types.polygon.testAsync({}, client)).be.false
@@ -285,26 +418,60 @@ describe('tables#dataType#types', () => {
     should(await types.polygon.testAsync(' ', client)).be.false
     should(await types.polygon.testAsync('abc', client)).be.false
     should(await types.polygon.testAsync(new Date(), client)).be.false
-    should(await types.polygon.testAsync({
-      type: 'Point',
-      coordinates: [ 90, 30 ]
-    }, client)).be.false
-    should(await types.polygon.testAsync({
-      type: 'LineString',
-      coordinates: [ 90, 30 ]
-    }, client)).be.false
-    should(await types.polygon.testAsync({
-      type: 'LineString',
-      coordinates: [ [ 90, 30 ], [ 91, 31 ] ]
-    }, client)).be.false
-    should(await types.polygon.testAsync({
-      type: 'MultiLineString',
-      coordinates: [ [ 90, 30 ], [ 91, 31 ] ]
-    }, client)).be.false
-    should(await types.polygon.testAsync({
-      type: 'Polygon',
-      coordinates: [ [ 90, 30 ], [ 91, 31 ] ]
-    }, client)).be.true
+    should(
+      await types.polygon.testAsync(
+        {
+          type: 'Point',
+          coordinates: [90, 30]
+        },
+        client
+      )
+    ).be.false
+    should(
+      await types.polygon.testAsync(
+        {
+          type: 'LineString',
+          coordinates: [90, 30]
+        },
+        client
+      )
+    ).be.false
+    should(
+      await types.polygon.testAsync(
+        {
+          type: 'LineString',
+          coordinates: [
+            [90, 30],
+            [91, 31]
+          ]
+        },
+        client
+      )
+    ).be.false
+    should(
+      await types.polygon.testAsync(
+        {
+          type: 'MultiLineString',
+          coordinates: [
+            [90, 30],
+            [91, 31]
+          ]
+        },
+        client
+      )
+    ).be.false
+    should(
+      await types.polygon.testAsync(
+        {
+          type: 'Polygon',
+          coordinates: [
+            [90, 30],
+            [91, 31]
+          ]
+        },
+        client
+      )
+    ).be.true
   })
   it('types.multipolygon should accept a valid multipolygon async', async () => {
     should(await types.multipolygon.testAsync({}, client)).be.false
@@ -316,26 +483,59 @@ describe('tables#dataType#types', () => {
     should(await types.multipolygon.testAsync(' ', client)).be.false
     should(await types.multipolygon.testAsync('abc', client)).be.false
     should(await types.multipolygon.testAsync(new Date(), client)).be.false
-    should(await types.multipolygon.testAsync({
-      type: 'Point',
-      coordinates: [ 90, 30 ]
-    }, client)).be.false
-    should(await types.multipolygon.testAsync({
-      type: 'LineString',
-      coordinates: [ 90, 30 ]
-    }, client)).be.false
-    should(await types.multipolygon.testAsync({
-      type: 'LineString',
-      coordinates: [ [ 90, 30 ], [ 91, 31 ] ]
-    }, client)).be.false
-    should(await types.multipolygon.testAsync({
-      type: 'MultiLineString',
-      coordinates: [ [ 90, 30 ], [ 91, 31 ] ]
-    }, client)).be.false
-    should(await types.multipolygon.testAsync({
-      type: 'MultiPolygon',
-      coordinates: [ [ 90, 30 ], [ 91, 31 ] ]
-    }, client)).be.true
+    should(
+      await types.multipolygon.testAsync(
+        {
+          type: 'Point',
+          coordinates: [90, 30]
+        },
+        client
+      )
+    ).be.false
+    should(
+      await types.multipolygon.testAsync(
+        {
+          type: 'LineString',
+          coordinates: [90, 30]
+        },
+        client
+      )
+    ).be.false
+    should(
+      await types.multipolygon.testAsync(
+        {
+          type: 'LineString',
+          coordinates: [
+            [90, 30],
+            [91, 31]
+          ]
+        },
+        client
+      )
+    ).be.false
+    should(
+      await types.multipolygon.testAsync(
+        {
+          type: 'MultiLineString',
+          coordinates: [
+            [90, 30],
+            [91, 31]
+          ]
+        },
+        client
+      )
+    ).be.false
+    should(
+      await types.multipolygon.testAsync(
+        {
+          type: 'MultiPolygon',
+          coordinates: [
+            [90, 30],
+            [91, 31]
+          ]
+        },
+        client
+      )
+    ).be.true
   })
 })
-

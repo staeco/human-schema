@@ -7,19 +7,21 @@ import isUnique from 'is-unique'
 import isObject from 'is-plain-obj'
 import { GeoObject, Type, Validator } from './typings'
 
-const isValidDate = (v: Date|string) => {
+const isValidDate = (v: Date | string) => {
   if (v instanceof Date) return !isNaN(v.getTime()) // already a date
   const parsed = moment(v, moment.ISO_8601)
   return parsed.isValid() && parsed.toISOString() === v
 }
 
-const isNumber = (v: number|any) =>
+const isNumber = (v: number | any) =>
   typeof v === 'number' && Number.isFinite(v)
 
 const getBasicGeoJSONIssues = (v: GeoObject, type: string) => {
   if (!isObject(v)) return 'Not a valid object'
-  if (v.type !== type) return `Not a valid type value (Expected ${type} not ${v.type})`
-	if (v.geometry && v.geometry.type !== type) return `Not a valid geometry.type value (Expected ${type} not ${v.type})`
+  if (v.type !== type)
+    return `Not a valid type value (Expected ${type} not ${v.type})`
+  if (v.geometry && v.geometry.type !== type)
+    return `Not a valid geometry.type value (Expected ${type} not ${v.type})`
   return true
 }
 /*
@@ -161,10 +163,7 @@ export const text: Type = {
     stream: {
       name: 'Stream URL',
       validateValue: (param: boolean) => param === true,
-      test: (v: string) =>
-        isValidURL(v, [
-          'http', 'https', 'rtmp', 'rtmps'
-        ]),
+      test: (v: string) => isValidURL(v, ['http', 'https', 'rtmp', 'rtmps']),
       valueType: 'boolean'
     },
     email: {
@@ -201,7 +200,7 @@ export const text: Type = {
           return false
         }
       },
-			test: (v: string, param: string) => new RegExp(param).test(v),
+      test: (v: string, param: string) => new RegExp(param).test(v),
       valueType: 'text'
     }
   }
@@ -314,13 +313,15 @@ export const date: Type = {
     min: {
       name: 'Minimum',
       validateValue: isValidDate,
-      test: (v: Date|string, param: Date|string) => new Date(v) >= new Date(param),
+      test: (v: Date | string, param: Date | string) =>
+        new Date(v) >= new Date(param),
       valueType: 'date'
     },
     max: {
       name: 'Maximum',
       validateValue: isValidDate,
-      test: (v: Date|string, param: Date|string) => new Date(v) <= new Date(param),
+      test: (v: Date | string, param: Date | string) =>
+        new Date(v) <= new Date(param),
       valueType: 'date'
     }
   },
@@ -338,7 +339,7 @@ export const date: Type = {
         customQuarter: { name: 'Custom Quarter' },
         year: { name: 'Year' },
         customYear: { name: 'Custom Year' },
-        decade: { name: 'Decade' },
+        decade: { name: 'Decade' }
       }
     }
   }
@@ -347,7 +348,8 @@ export const point: Type = {
   name: 'GeoJSON Point',
   geospatial: true,
   test: (v: any) => getBasicGeoJSONIssues(v, 'Point'),
-  testAsync: async (v: any, conn: Object) => { // TODO: sequelize conn type
+  testAsync: async (v: any, conn: Object) => {
+    // TODO: sequelize conn type
     const basicIssues = getBasicGeoJSONIssues(v, 'Point')
     if (basicIssues !== true) return basicIssues
     const geojson = await isValidGeoJSON(v)

@@ -1,66 +1,66 @@
 import { GeoJSON } from 'geojson'
 
 export interface Type {
-	name: string
-	test: (value: any) => boolean | string
-	testAsync?: (value: any, conn?: Object) => Promise<boolean | string>
-	items?: boolean
-	geospatial?: boolean
-	validators?: {
-		[name: string]: Validator
-	}
-	measurements?: {
-		[name: string]: Measurement
-	}
+  name: string
+  test: (value: any) => boolean | string
+  testAsync?: (value: any, conn?: Object) => Promise<boolean | string>
+  items?: boolean
+  geospatial?: boolean
+  validators?: {
+    [name: string]: Validator
+  }
+  measurements?: {
+    [name: string]: Measurement
+  }
 }
 export interface Validator {
-	name: string
-	valueType?: string
-	test: (value: any, param: any) => boolean
-	testAsync?: (value: any, conn?: Object) => Promise<boolean>
-	validateValue?: (v: any) => any
+  name: string
+  valueType?: string
+  test: (value: any, param: any) => boolean
+  testAsync?: (value: any, conn?: Object) => Promise<boolean>
+  validateValue?: (v: any) => any
 }
 export interface Measurement {
-	name: string
-	options: {
-		[name: string]: {
-			name: string
-		}
-	}
+  name: string
+  options: {
+    [name: string]: {
+      name: string
+    }
+  }
 }
 
-export type Coordinate = [ number?, number? ]
-export type Coordinates = (Coordinate|number)[] // [ Coordinate ] | Coordinate
+export type Coordinate = [number?, number?]
+export type Coordinates = (Coordinate | number)[] // [ Coordinate ] | Coordinate
 
 export interface GeoBase {
-	coordinates: Coordinates
+  coordinates: Coordinates
 }
 export interface GeoObject extends GeoBase {
-	type: string
-	geometry?: GeoJSON
+  type: string
+  geometry?: GeoJSON
 }
 
 export interface DataType {
-	id: string
-	name: string
-	notes?: string
-	temporal?: {
-		[name: string]: string
-	}
-	schema: {
-		[name: string]: Field
-	}
+  id: string
+  name: string
+  notes?: string
+  temporal?: {
+    [name: string]: string
+  }
+  schema: {
+    [name: string]: Field
+  }
 }
 export interface Field {
-	name: string
-	items?: Field
-	notes?: string
-	type: string
-	validation?: {
-		[name: string]: any
-	}
-	measurement?: {
-		type: string,
-		value: string
-	}
+  name: string
+  items?: Field
+  notes?: string
+  type: string
+  validation?: {
+    [name: string]: any
+  }
+  measurement?: {
+    type: string
+    value: string
+  }
 }
