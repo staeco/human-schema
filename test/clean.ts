@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { validate, clean } from '../'
+import { validate, clean } from '../src'
 import crime from './911-call.json'
 import should from 'should'
 

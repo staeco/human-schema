@@ -1,4 +1,4 @@
-import { validateItem, validate } from '../'
+import { validateItem, validate } from '../src'
 import should from 'should'
 import badMultiPolygon from './bad-multipolygon.json'
 import { client } from './pg'
