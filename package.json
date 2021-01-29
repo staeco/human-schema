@@ -1,6 +1,6 @@
 {
   "name": "human-schema",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "User friendly declarative schemas",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -26,6 +26,7 @@
     "node": ">=14"
   },
   "scripts": {
+    "docs": "typedoc src/index.ts --theme minimal && gh-pages -d docs",
     "lint": "prettier --write .",
     "build": "npm run clean && tsc -b",
     "clean": "rm -rf dist",
@@ -43,6 +44,7 @@
     "@types/geojson": "^7946.0.7",
     "@types/lodash.pickby": "^4.6.6",
     "@types/mocha": "^8.0.0",
+    "gh-pages": "^3.1.0",
     "husky": "^4.3.8",
     "mocha": "^8.0.1",
     "pg": "^8.3.0",
@@ -51,6 +53,7 @@
     "sequelize": "^6.3.3",
     "should": "^13.2.3",
     "ts-node": "^9.0.0",
+    "typedoc": "^0.20.19",
     "typescript": "^4.0.0"
   },
   "dependencies": {
