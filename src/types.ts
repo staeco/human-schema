@@ -10,7 +10,7 @@ import { GeoObject, Type, Validator } from './typings'
 const isValidDate = (v: Date | string) => {
   if (v instanceof Date) return !isNaN(v.getTime()) // already a date
   const parsed = moment(v, moment.ISO_8601)
-  return parsed.isValid() && parsed.toISOString() === v
+  return parsed.isValid()
 }
 
 const isNumber = (v: number | any) =>

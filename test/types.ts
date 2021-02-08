@@ -55,8 +55,12 @@ describe('tables#dataType#types', () => {
     should(types.date.test(true)).be.false
     should(types.date.test([])).be.false
     should(types.date.test(' ')).be.false
+    should(types.date.test('2021-02-08')).be.false
+    should(types.date.test(+new Date())).be.false
     should(types.date.test(new Date())).be.true
     should(types.date.test(new Date().toISOString())).be.true
+    should(types.date.test('2021-02-08T20:30:00Z')).be.true
+    should(types.date.test('2021-02-08T20:30:00.000Z')).be.true
   })
   it('types.point should accept a valid point', async () => {
     should(types.point.test({})).be.false

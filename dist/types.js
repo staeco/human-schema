@@ -15,7 +15,7 @@ const isValidDate = (v) => {
     if (v instanceof Date)
         return !isNaN(v.getTime()); // already a date
     const parsed = moment_timezone_1.default(v, moment_timezone_1.default.ISO_8601);
-    return parsed.isValid() && parsed.toISOString() === v;
+    return parsed.isValid();
 };
 const isNumber = (v) => typeof v === 'number' && Number.isFinite(v);
 const getBasicGeoJSONIssues = (v, type) => {
