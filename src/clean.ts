@@ -5,8 +5,8 @@ import { DataType, Field } from './typings'
 const cleanField = (f: Field) =>
   pickBy(
     {
-      name: f.name,
-      notes: f.notes,
+      name: f.name?.trim(),
+      notes: f.notes?.trim(),
       type: f.type,
       measurement: f.measurement
         ? { type: f.measurement.type, value: f.measurement.value }
@@ -19,8 +19,10 @@ const cleanField = (f: Field) =>
 
 export const clean = (dataType: DataType): DataType => ({
   ...dataType,
+  name: dataType.name?.trim(),
+  notes: dataType.notes?.trim(),
   schema: Object.entries(dataType.schema).reduce((acc, [k, v]) => {
-    acc[k] = cleanField(v)
+    acc[k.trim()] = cleanField(v)
     return acc
   }, {})
 })

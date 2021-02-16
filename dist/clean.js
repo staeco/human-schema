@@ -7,8 +7,8 @@ exports.clean = void 0;
 const lodash_pickby_1 = __importDefault(require("lodash.pickby"));
 // strips unused fields from schema fields
 const cleanField = (f) => lodash_pickby_1.default({
-    name: f.name,
-    notes: f.notes,
+    name: f.name?.trim(),
+    notes: f.notes?.trim(),
     type: f.type,
     measurement: f.measurement
         ? { type: f.measurement.type, value: f.measurement.value }
@@ -18,8 +18,10 @@ const cleanField = (f) => lodash_pickby_1.default({
 }, (v) => v != null);
 const clean = (dataType) => ({
     ...dataType,
+    name: dataType.name?.trim(),
+    notes: dataType.notes?.trim(),
     schema: Object.entries(dataType.schema).reduce((acc, [k, v]) => {
-        acc[k] = cleanField(v);
+        acc[k.trim()] = cleanField(v);
         return acc;
     }, {})
 });
