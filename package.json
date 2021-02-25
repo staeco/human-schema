@@ -1,6 +1,6 @@
 {
   "name": "human-schema",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "User friendly declarative schemas",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

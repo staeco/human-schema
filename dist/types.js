@@ -11,11 +11,13 @@ const isValidGeometry_1 = __importDefault(require("./isValidGeometry"));
 const moment_timezone_1 = __importDefault(require("moment-timezone"));
 const is_unique_1 = __importDefault(require("is-unique"));
 const is_plain_obj_1 = __importDefault(require("is-plain-obj"));
+const isoRegex = /^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(.[0-9]+)?(Z)?$/i;
 const isValidDate = (v) => {
     if (v instanceof Date)
         return !isNaN(v.getTime()); // already a date
-    const parsed = moment_timezone_1.default(v, moment_timezone_1.default.ISO_8601);
-    return parsed.isValid();
+    if (typeof v !== 'string')
+        return false;
+    return isoRegex.test(v) && moment_timezone_1.default(v, moment_timezone_1.default.ISO_8601).isValid();
 };
 const isNumber = (v) => typeof v === 'number' && Number.isFinite(v);
 const getBasicGeoJSONIssues = (v, type) => {
