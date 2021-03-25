@@ -1,4 +1,4 @@
-import { DataType, Field } from './typings'
+import { DataType, Schema, Field } from './typings'
 import * as types from './types'
 
 // support JS objects coming in, since all validators expect JSON
@@ -6,6 +6,33 @@ const serialize = (v: any) =>
   v && typeof v.toJSON === 'function' ? v.toJSON() : v
 
 const requiredValidator = types.text.validators.required // pull it out of any type, theyre all the same
+
+const validateSchema = async (
+  path: Array<string | number>,
+  schema: Schema,
+  item: Object,
+  conn?: Object
+): Promise<true | Array<object>> => {
+  const errors = []
+  if (!item || typeof item !== 'object' || Array.isArray(item)) {
+    errors.push({ value: item, message: 'Not a valid top-level object' })
+    return errors
+  }
+
+  await Promise.all(
+    Object.keys(schema).map(async (k) => {
+      const fieldErrors = await validateField(
+        [...path, k],
+        schema[k],
+        item[k],
+        conn
+      )
+      if (fieldErrors !== true) errors.push(...fieldErrors)
+    })
+  )
+  if (errors.length === 0) return true
+  return errors
+}
 
 const validateField = async (
   path: Array<string | number>,
@@ -15,7 +42,7 @@ const validateField = async (
 ): Promise<true | Array<object>> => {
   if (!field) return true
   const errors = []
-  const { type, items, validation } = field
+  const { type, items, schema, validation } = field
   value = serialize(value)
   const exists = requiredValidator.test(value, true)
 
@@ -85,6 +112,12 @@ const validateField = async (
     )
   }
 
+  // subschema
+  if (schema) {
+    const schemaErrors = await validateSchema(path, schema, value, conn)
+    if (schemaErrors !== true) errors.push(...schemaErrors)
+  }
+
   if (errors.length === 0) return true
   return errors
 }
@@ -93,24 +126,5 @@ export const validateItem = async (
   dataType: DataType,
   item: Object,
   conn?: Object
-): Promise<true | Array<object>> => {
-  const errors = []
-  if (!item || typeof item !== 'object' || Array.isArray(item)) {
-    errors.push({ value: item, message: 'Not a valid top-level object' })
-    return errors
-  }
-
-  await Promise.all(
-    Object.keys(dataType.schema).map(async (k) => {
-      const fieldErrors = await validateField(
-        [k],
-        dataType.schema[k],
-        item[k],
-        conn
-      )
-      if (fieldErrors !== true) errors.push(...fieldErrors)
-    })
-  )
-  if (errors.length === 0) return true
-  return errors
-}
+): Promise<true | Array<object>> =>
+  validateSchema([], dataType.schema, item, conn)

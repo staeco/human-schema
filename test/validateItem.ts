@@ -89,6 +89,85 @@ describe('tables#dataType#validateItem', () => {
     should(validate(spec)).equal(true)
     should(await validateItem(spec, item)).equal(true)
   })
+  it('validateItem() should return true on a valid object item', async () => {
+    const spec = {
+      ...base,
+      schema: {
+        info: {
+          type: 'object',
+          name: 'Info',
+          schema: {
+            names: {
+              type: 'array',
+              name: 'Names',
+              validation: {
+                minItems: 1,
+                maxItems: 10
+              },
+              items: {
+                name: 'Name',
+                type: 'text',
+                validation: {
+                  minLength: 1,
+                  maxLength: 10
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    const item = {
+      info: {
+        names: ['eric', 'john']
+      }
+    }
+    should(validate(spec)).equal(true)
+    should(await validateItem(spec, item)).equal(true)
+  })
+  it('validateItem() should return errors on a invalid object item', async () => {
+    const spec = {
+      ...base,
+      schema: {
+        info: {
+          type: 'object',
+          name: 'Info',
+          schema: {
+            names: {
+              type: 'array',
+              name: 'Names',
+              validation: {
+                minItems: 1,
+                maxItems: 10
+              },
+              items: {
+                name: 'Name',
+                type: 'text',
+                validation: {
+                  minLength: 1,
+                  maxLength: 10
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    const item = {
+      info: {
+        names: ['eric', '']
+      }
+    }
+    should(validate(spec)).equal(true)
+    should(await validateItem(spec, item)).eql([
+      {
+        message: 'Failed Minimum Length validation',
+        path: ['info', 'names', 1],
+        validator: 'minLength',
+        value: ''
+      }
+    ])
+  })
   it('validateItem() should return error on missing text item', async () => {
     const spec = {
       ...base,

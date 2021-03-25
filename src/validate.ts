@@ -113,22 +113,51 @@ const validateField = (
       message: 'Not a valid type value'
     })
 
+  if (errors.length > 0) return errors // exit early if type is just bad
+
   // items
-  if (type && type.items && !value.items)
+  if (type.items && !value.items)
     errors.push({
       value: value.items,
       path: [...path, 'items'],
       message: 'This field is required for this type'
     })
-  if (type && !type.items && value.items)
+  if (!type.items && value.items)
     errors.push({
       value: value.items,
       path: [...path, 'items'],
       message: 'This field should not exist for this type'
     })
-  if (value.items) {
+  if (value.items && !isObject(value.items))
+    errors.push({
+      value: value.items,
+      path: [...path, 'items'],
+      message: 'Not a valid object value'
+    })
+  if (value.items && isObject(value.items)) {
     const fieldErrors = validateField([...path, 'items'], value.items)
     if (fieldErrors !== true) errors.push(...fieldErrors)
+  }
+
+  // schema
+  if (!type.schema && value.schema)
+    errors.push({
+      value: value.schema,
+      path: [...path, 'schema'],
+      message: 'This field should not exist for this type'
+    })
+
+  if (type.schema && !isObject(value.schema))
+    errors.push({
+      value: value.schema,
+      path: [...path, 'schema'],
+      message: 'Not a valid object value'
+    })
+  if (type.schema && isObject(value.schema)) {
+    Object.keys(value.schema).forEach((k) => {
+      const fieldErrors = validateField([...path, 'schema', k], value.schema[k])
+      if (fieldErrors !== true) errors.push(...fieldErrors)
+    })
   }
 
   // validation
@@ -138,7 +167,7 @@ const validateField = (
       path: [...path, 'validation'],
       message: 'Not a valid object value'
     })
-  if (type && isObject(value.validation)) {
+  if (isObject(value.validation)) {
     Object.keys(value.validation).forEach((k) => {
       const param = value.validation[k]
       const validator = type.validators && type.validators[k]
@@ -174,7 +203,7 @@ const validateField = (
       path: [...path, 'measurement'],
       message: 'This field should not exist for this type'
     })
-  if (type && isObject(value.measurement) && type.measurements) {
+  if (isObject(value.measurement) && type.measurements) {
     if (!value.measurement.type)
       errors.push({
         value: value.measurement.type,

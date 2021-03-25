@@ -11,7 +11,7 @@ const isValidGeometry_1 = __importDefault(require("./isValidGeometry"));
 const moment_timezone_1 = __importDefault(require("moment-timezone"));
 const is_unique_1 = __importDefault(require("is-unique"));
 const is_plain_obj_1 = __importDefault(require("is-plain-obj"));
-const isoRegex = /^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(.[0-9]+)?(Z)?$/i;
+const isoRegex = /^(-?(?:[1-9]\d*)?\d{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12]\d)t(2[0-3]|[01]\d):([0-5]\d):([0-5]\d)(.\d+)?(z)?$/i;
 const isValidDate = (v) => {
     if (v instanceof Date)
         return !isNaN(v.getTime()); // already a date
@@ -94,6 +94,7 @@ exports.array = {
 };
 exports.object = {
     name: 'Map',
+    schema: true,
     test: is_plain_obj_1.default,
     validators: {
         required,

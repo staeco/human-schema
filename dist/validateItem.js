@@ -24,11 +24,26 @@ const types = __importStar(require("./types"));
 // support JS objects coming in, since all validators expect JSON
 const serialize = (v) => v && typeof v.toJSON === 'function' ? v.toJSON() : v;
 const requiredValidator = types.text.validators.required; // pull it out of any type, theyre all the same
+const validateSchema = async (path, schema, item, conn) => {
+    const errors = [];
+    if (!item || typeof item !== 'object' || Array.isArray(item)) {
+        errors.push({ value: item, message: 'Not a valid top-level object' });
+        return errors;
+    }
+    await Promise.all(Object.keys(schema).map(async (k) => {
+        const fieldErrors = await validateField([...path, k], schema[k], item[k], conn);
+        if (fieldErrors !== true)
+            errors.push(...fieldErrors);
+    }));
+    if (errors.length === 0)
+        return true;
+    return errors;
+};
 const validateField = async (path, field, value, conn) => {
     if (!field)
         return true;
     const errors = [];
-    const { type, items, validation } = field;
+    const { type, items, schema, validation } = field;
     value = serialize(value);
     const exists = requiredValidator.test(value, true);
     // if not required and value is empty, bail out
@@ -85,24 +100,16 @@ const validateField = async (path, field, value, conn) => {
                 errors.push(...fieldErrors);
         }));
     }
-    if (errors.length === 0)
-        return true;
-    return errors;
-};
-const validateItem = async (dataType, item, conn) => {
-    const errors = [];
-    if (!item || typeof item !== 'object' || Array.isArray(item)) {
-        errors.push({ value: item, message: 'Not a valid top-level object' });
-        return errors;
+    // subschema
+    if (schema) {
+        const schemaErrors = await validateSchema(path, schema, value, conn);
+        if (schemaErrors !== true)
+            errors.push(...schemaErrors);
     }
-    await Promise.all(Object.keys(dataType.schema).map(async (k) => {
-        const fieldErrors = await validateField([k], dataType.schema[k], item[k], conn);
-        if (fieldErrors !== true)
-            errors.push(...fieldErrors);
-    }));
     if (errors.length === 0)
         return true;
     return errors;
 };
+const validateItem = async (dataType, item, conn) => validateSchema([], dataType.schema, item, conn);
 exports.validateItem = validateItem;
 //# sourceMappingURL=validateItem.js.map

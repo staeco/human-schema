@@ -5,6 +5,7 @@ export interface Type {
   test: (value: any) => boolean | string
   testAsync?: (value: any, conn?: Object) => Promise<boolean | string>
   items?: boolean
+  schema?: boolean
   geospatial?: boolean
   validators?: {
     [name: string]: Validator
@@ -40,20 +41,24 @@ export interface GeoObject extends GeoBase {
   geometry?: GeoJSON
 }
 
+export type Schema = {
+  [name: string]: Field
+}
+
 export interface DataType {
   id: string
   name: string
   notes?: string
+  official?: boolean
   temporal?: {
     [name: string]: string
   }
-  schema: {
-    [name: string]: Field
-  }
+  schema: Schema
 }
-export interface Field {
+export type Field = {
   name: string
   items?: Field
+  schema?: Schema
   notes?: string
   type: string
   validation?: {

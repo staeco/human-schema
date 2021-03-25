@@ -335,4 +335,108 @@ describe('tables#dataType#validate', () => {
     }
     should(validate(spec)).eql(true)
   })
+  it('validate() should validate on spec with valid array items', async () => {
+    const spec = {
+      ...crime,
+      schema: {
+        ...crime.schema,
+        dummy: {
+          name: 'Dummy',
+          type: 'array',
+          items: {
+            name: 'Item',
+            type: 'text',
+            validation: {
+              minLength: 1
+            }
+          }
+        }
+      }
+    }
+    should(validate(spec)).eql(true)
+  })
+  it('validate() should throw correctly scoped errors on invalid items fields', () => {
+    const spec = {
+      ...crime,
+      schema: {
+        ...crime.schema,
+        dummy: {
+          name: 'Dummy',
+          type: 'array',
+          items: {
+            name: 'Test',
+            type: 'text',
+            validation: {
+              doesNotExist: 100
+            }
+          }
+        }
+      }
+    }
+    should(validate(spec)).eql([
+      {
+        message: 'Not a valid validation key',
+        path: ['schema', 'dummy', 'items', 'validation', 'doesNotExist'],
+        value: 'doesNotExist'
+      }
+    ])
+  })
+
+  it('validate() should validate on spec with valid object schema', async () => {
+    const spec = {
+      ...crime,
+      schema: {
+        ...crime.schema,
+        dummy: {
+          name: 'Dummy',
+          type: 'object',
+          schema: {
+            tag: {
+              name: 'Tag',
+              type: 'text',
+              validation: {
+                minLength: 1
+              }
+            }
+          }
+        }
+      }
+    }
+    should(validate(spec)).eql(true)
+  })
+  it('validate() should throw correctly scoped errors on invalid schema fields', () => {
+    const spec = {
+      ...crime,
+      schema: {
+        ...crime.schema,
+        dummy: {
+          name: 'Dummy',
+          type: 'object',
+          schema: {
+            tag: {
+              name: 'Tag',
+              type: 'text',
+              validation: {
+                doesNotExist: 100
+              }
+            }
+          }
+        }
+      }
+    }
+    should(validate(spec)).eql([
+      {
+        message: 'Not a valid validation key',
+        path: [
+          'schema',
+          'dummy',
+          'schema',
+          'tag',
+          'validation',
+          'doesNotExist'
+        ],
+        value: 'doesNotExist'
+      }
+    ])
+  })
 })

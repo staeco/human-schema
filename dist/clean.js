@@ -14,16 +14,18 @@ const cleanField = (f) => lodash_pickby_1.default({
         ? { type: f.measurement.type, value: f.measurement.value }
         : undefined,
     items: f.items ? cleanField(f.items) : undefined,
+    schema: f.schema ? cleanSchema(f.schema) : undefined,
     validation: f.validation
 }, (v) => v != null);
+const cleanSchema = (schema) => Object.entries(schema).reduce((acc, [k, v]) => {
+    acc[k.trim()] = cleanField(v);
+    return acc;
+}, {});
 const clean = (dataType) => ({
     ...dataType,
     name: dataType.name?.trim(),
     notes: dataType.notes?.trim(),
-    schema: Object.entries(dataType.schema).reduce((acc, [k, v]) => {
-        acc[k.trim()] = cleanField(v);
-        return acc;
-    }, {})
+    schema: cleanSchema(dataType.schema)
 });
 exports.clean = clean;
 //# sourceMappingURL=clean.js.map

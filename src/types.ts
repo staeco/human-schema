@@ -7,7 +7,7 @@ import isUnique from 'is-unique'
 import isObject from 'is-plain-obj'
 import { GeoObject, Type, Validator } from './typings'
 
-const isoRegex = /^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(.[0-9]+)?(Z)?$/i
+const isoRegex = /^(-?(?:[1-9]\d*)?\d{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12]\d)t(2[0-3]|[01]\d):([0-5]\d):([0-5]\d)(.\d+)?(z)?$/i
 const isValidDate = (v: Date | string) => {
   if (v instanceof Date) return !isNaN(v.getTime()) // already a date
   if (typeof v !== 'string') return false
@@ -90,6 +90,7 @@ export const array: Type = {
 }
 export const object: Type = {
   name: 'Map',
+  schema: true,
   test: isObject,
   validators: {
     required,
