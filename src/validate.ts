@@ -147,13 +147,13 @@ const validateField = (
       message: 'This field should not exist for this type'
     })
 
-  if (type.schema && !isObject(value.schema))
+  if (type.schema && value.schema && !isObject(value.schema))
     errors.push({
       value: value.schema,
       path: [...path, 'schema'],
       message: 'Not a valid object value'
     })
-  if (type.schema && isObject(value.schema)) {
+  if (type.schema && value.schema && isObject(value.schema)) {
     Object.keys(value.schema).forEach((k) => {
       const fieldErrors = validateField([...path, 'schema', k], value.schema[k])
       if (fieldErrors !== true) errors.push(...fieldErrors)

@@ -382,6 +382,19 @@ describe('tables#dataType#validate', () => {
     ])
   })
 
+  it('validate() should validate on spec with no object schema', async () => {
+    const spec = {
+      ...crime,
+      schema: {
+        ...crime.schema,
+        dummy: {
+          name: 'Dummy',
+          type: 'object'
+        }
+      }
+    }
+    should(validate(spec)).eql(true)
+  })
   it('validate() should validate on spec with valid object schema', async () => {
     const spec = {
       ...crime,

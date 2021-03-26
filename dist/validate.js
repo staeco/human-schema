@@ -157,13 +157,13 @@ const validateField = (path, value) => {
             path: [...path, 'schema'],
             message: 'This field should not exist for this type'
         });
-    if (type.schema && !is_plain_obj_1.default(value.schema))
+    if (type.schema && value.schema && !is_plain_obj_1.default(value.schema))
         errors.push({
             value: value.schema,
             path: [...path, 'schema'],
             message: 'Not a valid object value'
         });
-    if (type.schema && is_plain_obj_1.default(value.schema)) {
+    if (type.schema && value.schema && is_plain_obj_1.default(value.schema)) {
         Object.keys(value.schema).forEach((k) => {
             const fieldErrors = validateField([...path, 'schema', k], value.schema[k]);
             if (fieldErrors !== true)
